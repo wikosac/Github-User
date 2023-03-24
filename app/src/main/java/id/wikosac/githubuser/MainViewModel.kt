@@ -11,10 +11,10 @@ import retrofit2.Response
 class MainViewModel: ViewModel() {
 
     private val _users = MutableLiveData<ItemsItem>()
-    private val _listUsers = MutableLiveData<List<ItemsItem>>()
+    private val _listItems = MutableLiveData<List<ItemsItem>>()
     private val _isLoading = MutableLiveData<Boolean>()
     val users: LiveData<ItemsItem> = _users
-    val listUsers: LiveData<List<ItemsItem>> = _listUsers
+    val listUsers: LiveData<List<ItemsItem>> = _listItems
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object{
@@ -36,8 +36,7 @@ class MainViewModel: ViewModel() {
             ) {
 //                _isLoading.value = false
                 if (response.isSuccessful) {
-//                    _users.value = response.body()?.items
-                    _listUsers.value = response.body()?.items
+                    _listItems.value = response.body()?.items
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
