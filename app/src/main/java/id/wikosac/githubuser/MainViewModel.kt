@@ -23,18 +23,18 @@ class MainViewModel: ViewModel() {
     }
 
     init {
-        findUser()
+        findUser("Arif")
     }
 
-    private fun findUser() {
-//        _isLoading.value = true
-        val client = ApiConfig.getApiService().getUser(USERNAME)
+    fun findUser(key: String) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getUser(key)
         client.enqueue(object : Callback<GithubResponse> {
             override fun onResponse(
                 call: Call<GithubResponse>,
                 response: Response<GithubResponse>
             ) {
-//                _isLoading.value = false
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _listItems.value = response.body()?.items
                 } else {

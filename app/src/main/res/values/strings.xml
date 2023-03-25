@@ -2,4 +2,6 @@
     <string name="app_name">GithubUser</string>
     <string name="username">username</string>
     <string name="klik">%1$s diklik!</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Masukkan Username</string>
 </resources>
