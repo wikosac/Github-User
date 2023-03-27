@@ -1,6 +1,6 @@
 package id.wikosac.githubuser.detail
 
-import androidx.appcompat.app.AppCompatActivity
+import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -24,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
             R.string.foll,
             R.string.fill
         )
+        var nickname = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,13 +32,13 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val nickname = intent.getStringExtra(EXTRA_ITEM).toString()
+        nickname = intent.getStringExtra(EXTRA_ITEM).toString()
         detailViewModel.showUser(nickname).toString()
         detailViewModel.users.observe(this) {
             with (binding) {
-                Glide.with(avatar).load(it.avatarUrl)
-                    .error(R.drawable.ic_baseline_broken_image_24).into(avatar)
-                username.text = if (it.name != null) it.name else it.login
+                Glide.with(avatarView).load(it.avatarUrl)
+                    .error(R.drawable.ic_baseline_broken_image_24).into(avatarView)
+                usernameView.text = if (it.name != null) it.name else it.login
                 bio.text = if (it.bio != null) it.bio else "-"
                 val foll = String.format(resources.getString(R.string.follower, it.followers.toString()))
                 val fill = String.format(resources.getString(R.string.following, it.following.toString()))

@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import id.wikosac.githubuser.detail.DetailActivity
 import id.wikosac.githubuser.detail.DetailViewModel
 import id.wikosac.githubuser.R
@@ -46,12 +47,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.recycleView.layoutManager = layoutManager
-
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.recycleView.addItemDecoration(itemDecoration)
-
+        binding.recycleView.layoutManager = LinearLayoutManager(this)
+        binding.recycleView.addItemDecoration(
+            DividerItemDecoration(this, RecyclerView.VERTICAL)
+        )
         mainViewModel.listUsers.observe(this) { data ->
             setItemData(data)
         }

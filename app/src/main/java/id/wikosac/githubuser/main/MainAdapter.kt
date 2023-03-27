@@ -48,29 +48,8 @@ class MainAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val username: TextView = view.findViewById(R.id.username)
         val avatar: ImageView = view.findViewById(R.id.avatar)
-
-//        fun bind(items: ItemsItem) = with(binding) {
-//            username.text = items.login
-//            Glide.with(avatar.context)
-//                .load(items.avatarUrl)
-//                .error(R.drawable.ic_baseline_broken_image_24)
-//                .into(avatar)
-
-//            val pos = absoluteAdapterPosition
-//            itemView.setOnClickListener { handler.onClick(pos, items) }
-
-//            itemView.setOnClickListener {
-//                val intent = Intent(root.context, DetailActivity::class.java)
-//                intent.putExtra("toko", food.toko)
-//                intent.putExtra("alamat", food.alamat)
-//                intent.putExtra("rating", food.rating)
-//                intent.putExtra("img", PlaceApi.getPlaceUrl(food.toko))
-//                root.context.startActivity(intent)
-//            }
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
