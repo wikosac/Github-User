@@ -1,7 +1,6 @@
 package id.wikosac.githubuser.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.wikosac.githubuser.databinding.FragmentFollowBinding
 import id.wikosac.githubuser.main.ItemsItem
-import id.wikosac.githubuser.main.MainAdapter
-
 
 class FollowFragment : Fragment() {
     private lateinit var binding: FragmentFollowBinding
@@ -22,7 +19,6 @@ class FollowFragment : Fragment() {
     companion object {
         const val ARG_POSITION = "section_number"
         const val ARG_USERNAME = "app_name"
-        const val TAG = "followfragment"
     }
 
     override fun onCreateView(
@@ -31,6 +27,9 @@ class FollowFragment : Fragment() {
     ): View {
         binding = FragmentFollowBinding.inflate(inflater, container, false)
         detailViewModel = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
+        detailViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
         binding.recycleView.layoutManager = LinearLayoutManager(requireActivity())
         return binding.root
     }
@@ -59,5 +58,13 @@ class FollowFragment : Fragment() {
     private fun setItemData(itemsItem: List<ItemsItem>) {
         val adapter = DetailAdapter(itemsItem)
         binding.recycleView.adapter = adapter
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }

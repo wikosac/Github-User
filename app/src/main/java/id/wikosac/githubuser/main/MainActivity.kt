@@ -22,25 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainAdapter: MainAdapter
     private val mainViewModel by viewModels<MainViewModel>()
-    private val detailViewModel by viewModels<DetailViewModel>()
-    private val handler = object : MainAdapter.ClickHandler {
-        override fun onClick(position: Int, items: ItemsItem) {
-//            if (actionMode != null) {
-//                myAdapter.toggleSelection(position)
-//                if (myAdapter.getSelection().isEmpty())
-//                    actionMode?.finish()
-//                else
-//                    actionMode?.invalidate()
-//                return
-//            }
-            val message = getString(R.string.klik, items.login)
-            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +51,6 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 mainViewModel.findUser(query)
-//                val data = arrayListOf<String>()
-//                data.add(query)
-//                mainViewModel.listUsers.observe(this@MainActivity) {
-//                    setItemData(data)
-//                }
-//                Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
                 searchView.clearFocus()
                 return true
             }

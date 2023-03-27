@@ -2,6 +2,7 @@ package id.wikosac.githubuser.detail
 
 import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.viewpager2.widget.ViewPager2
@@ -38,13 +39,17 @@ class DetailActivity : AppCompatActivity() {
             with (binding) {
                 Glide.with(avatarView).load(it.avatarUrl)
                     .error(R.drawable.ic_baseline_broken_image_24).into(avatarView)
-                usernameView.text = if (it.name != null) it.name else it.login
+                name.text = it.name
+                usernameView.text = it.login
                 bio.text = if (it.bio != null) it.bio else "-"
                 val foll = String.format(resources.getString(R.string.follower, it.followers.toString()))
                 val fill = String.format(resources.getString(R.string.following, it.following.toString()))
                 follower.text = foll
                 following.text = fill
             }
+        }
+        detailViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         val sectionsPagerAdapter = FollowAdapter(this)
@@ -55,5 +60,13 @@ class DetailActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
         supportActionBar?.elevation = 0f
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }

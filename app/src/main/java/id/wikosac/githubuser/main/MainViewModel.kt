@@ -11,16 +11,13 @@ import retrofit2.Response
 
 class MainViewModel: ViewModel() {
 
-    private val _users = MutableLiveData<ItemsItem>()
     private val _listItems = MutableLiveData<List<ItemsItem>>()
     private val _isLoading = MutableLiveData<Boolean>()
-    val users: LiveData<ItemsItem> = _users
     val listUsers: LiveData<List<ItemsItem>> = _listItems
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object{
         private const val TAG = "MainViewModel"
-        private const val USERNAME = "Wiko"
     }
 
     init {

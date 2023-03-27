@@ -15,8 +15,6 @@ class MainAdapter(
     private val listItems: List<ItemsItem>
     ) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    private val selectionIds = ArrayList<String>()
-
     interface OnItemClickCallback {
         fun onItemClicked(data: ItemsItem)
     }
@@ -25,26 +23,6 @@ class MainAdapter(
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
-    }
-
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>() {
-            override fun areItemsTheSame(
-                oldData: ItemsItem, newData: ItemsItem
-            ): Boolean {
-                return oldData.id == newData.id
-            }
-            override fun areContentsTheSame(
-                oldData: ItemsItem, newData: ItemsItem
-            ): Boolean {
-                return oldData == newData
-            }
-        }
-        private const val TAG = "UserAdapter"
-    }
-
-    interface ClickHandler {
-        fun onClick(position: Int, ItemsItem: ItemsItem)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -70,25 +48,4 @@ class MainAdapter(
     }
 
     override fun getItemCount() = listItems.size
-
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun toggleSelection(pos: Int) {
-//        val id = getItem(pos).id
-//        if (selectionIds.contains(id))
-//            selectionIds.remove(id)
-//        else
-//            selectionIds.add(id)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun getSelection(): List<String> {
-//        return selectionIds
-//    }
-//
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun resetSelection() {
-//        selectionIds.clear()
-//        notifyDataSetChanged()
-//    }
-
 }

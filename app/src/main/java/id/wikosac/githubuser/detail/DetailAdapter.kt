@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import id.wikosac.githubuser.R
 import id.wikosac.githubuser.main.ItemsItem
-import id.wikosac.githubuser.main.MainAdapter
 
 class DetailAdapter(
     private val listFollowers: List<ItemsItem>

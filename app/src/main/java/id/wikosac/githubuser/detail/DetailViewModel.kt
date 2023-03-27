@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import id.wikosac.githubuser.ApiConfig
-import id.wikosac.githubuser.main.GithubResponse
 import id.wikosac.githubuser.main.ItemsItem
 import retrofit2.Call
 import retrofit2.Callback
