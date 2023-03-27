@@ -4,4 +4,6 @@
     <string name="klik">%1$s diklik!</string>
     <string name="search">Search</string>
     <string name="search_hint">Masukkan Username</string>
+    <string name="follower">%1$s Follower</string>
+    <string name="following">%1$s Following</string>
 </resources>

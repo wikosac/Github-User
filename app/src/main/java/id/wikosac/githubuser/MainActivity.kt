@@ -92,8 +92,6 @@ class MainActivity : AppCompatActivity() {
         adapter.setOnItemClickCallback(object : MainAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ItemsItem) {
                 showSelected(data.login)
-                Log.d(TAG, "onItemClicked: $data")
-                Toast.makeText(this@MainActivity, "Username: $data", Toast.LENGTH_SHORT).show()
             }
         })
     }

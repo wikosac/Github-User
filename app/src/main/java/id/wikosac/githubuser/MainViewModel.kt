@@ -23,7 +23,7 @@ class MainViewModel: ViewModel() {
     }
 
     init {
-        findUser("Arif")
+        findUser("Wiko")
     }
 
     fun findUser(key: String) {
@@ -38,7 +38,7 @@ class MainViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _listItems.value = response.body()?.items
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    Log.e(TAG, "onFailurei: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<GithubResponse>, t: Throwable) {

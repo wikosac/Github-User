@@ -18,8 +18,7 @@ class DetailViewModel: ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object{
-        private const val TAG = "MainViewModel"
-        private const val USERNAME = "Wiko"
+        private const val TAG = "DetailViewModel"
     }
 
     fun showUser(key: String) {
@@ -34,7 +33,7 @@ class DetailViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _users.value = response.body()
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    Log.e(TAG, "onFailuree: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<DetailResponse>, t: Throwable) {
