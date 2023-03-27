@@ -1,23 +1,31 @@
 package id.wikosac.githubuser
 
-import android.content.ClipData.Item
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class UserAdapter(
+class MainAdapter(
     private val listItems: List<ItemsItem>
-    ) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     private val selectionIds = ArrayList<String>()
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: ItemsItem)
+    }
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>() {
@@ -77,6 +85,9 @@ class UserAdapter(
             .error(R.drawable.ic_baseline_broken_image_24)
             .into(holder.avatar)
         holder.username.text = username
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(listItems[holder.adapterPosition])
+        }
     }
 
     override fun getItemCount() = listItems.size

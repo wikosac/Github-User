@@ -1,9 +1,12 @@
 package id.wikosac.githubuser
 
 import android.app.SearchManager
+import android.content.ClipData.Item
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -11,16 +14,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import id.wikosac.githubuser.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var userAdapter: UserAdapter
+    private lateinit var mainAdapter: MainAdapter
     private val mainViewModel by viewModels<MainViewModel>()
-    private val handler = object : UserAdapter.ClickHandler {
+    private val detailViewModel by viewModels<DetailViewModel>()
+    private val handler = object : MainAdapter.ClickHandler {
         override fun onClick(position: Int, items: ItemsItem) {
 //            if (actionMode != null) {
 //                myAdapter.toggleSelection(position)
@@ -86,9 +87,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setItemData(itemsItem: List<ItemsItem>) {
-        val adapter = UserAdapter(itemsItem)
+        val adapter = MainAdapter(itemsItem)
         binding.recycleView.adapter = adapter
-//        adapter.notifyDataSetChanged()
+        adapter.setOnItemClickCallback(object : MainAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: ItemsItem) {
+                showSelected(data.login)
+                Log.d(TAG, "onItemClicked: $data")
+                Toast.makeText(this@MainActivity, "Username: $data", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun showSelected(nickname: String) {
+        val moveWithObjectIntent = Intent(this@MainActivity, DetailActivity::class.java)
+        moveWithObjectIntent.putExtra(DetailActivity.EXTRA_ITEM, nickname)
+        startActivity(moveWithObjectIntent)
     }
 
     private fun showLoading(isLoading: Boolean) {
