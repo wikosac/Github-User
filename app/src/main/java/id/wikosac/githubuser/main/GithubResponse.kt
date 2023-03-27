@@ -1,4 +1,4 @@
-package id.wikosac.githubuser
+package id.wikosac.githubuser.main
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

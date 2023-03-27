@@ -1,4 +1,4 @@
-package id.wikosac.githubuser
+package id.wikosac.githubuser.detail
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
