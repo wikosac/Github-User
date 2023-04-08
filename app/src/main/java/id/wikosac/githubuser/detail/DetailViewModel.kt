@@ -1,17 +1,32 @@
 package id.wikosac.githubuser.detail
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import id.wikosac.githubuser.ApiConfig
+import id.wikosac.githubuser.database.Favorite
+import id.wikosac.githubuser.database.FavoriteDao
+import id.wikosac.githubuser.database.FavoriteDatabase
 import id.wikosac.githubuser.main.ItemsItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel: ViewModel() {
+class DetailViewModel(application: Application): AndroidViewModel(application) {
 
+    private var favoriteDatabase: FavoriteDatabase
+    private var favoriteDao: FavoriteDao?
+
+    init{
+        favoriteDatabase = FavoriteDatabase.getDatabase(application)
+        favoriteDao = favoriteDatabase.favoriteDao()
+    }
     private val _users = MutableLiveData<DetailResponse>()
     private val _listFollowers = MutableLiveData<List<ItemsItem>>()
     private val _listFollowing = MutableLiveData<List<ItemsItem>>()
@@ -89,5 +104,17 @@ class DetailViewModel: ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    fun favUser(id: Int, username: String, avatarUrl: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = Favorite(id, username, avatarUrl)
+            favoriteDao?.insert(user)
+        }
+    }
+    fun unfavUser( id: Int){
+        CoroutineScope(Dispatchers.IO).launch {
+            favoriteDao?.delete(id)
+        }
     }
 }

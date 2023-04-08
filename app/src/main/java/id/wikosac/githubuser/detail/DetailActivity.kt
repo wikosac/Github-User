@@ -3,6 +3,7 @@ package id.wikosac.githubuser.detail
 import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.viewpager2.widget.ViewPager2
@@ -19,6 +20,8 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ITEM = "extra_item"
+        const val EXTRA_AVA = "extra_ava"
+        const val EXTRA_ID = "extra_id"
         const val TAG = "detail"
         @StringRes
         private val TAB_TITLES = intArrayOf(
@@ -26,6 +29,8 @@ class DetailActivity : AppCompatActivity() {
             R.string.fill
         )
         var nickname = ""
+        var avatarUrl = ""
+        var id = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +38,10 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        id = intent.getIntExtra(EXTRA_ID, 0)
         nickname = intent.getStringExtra(EXTRA_ITEM).toString()
+        avatarUrl = intent.getStringExtra(EXTRA_AVA).toString()
+
         detailViewModel.showUser(nickname).toString()
         detailViewModel.users.observe(this) {
             with (binding) {
@@ -60,6 +68,21 @@ class DetailActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
         supportActionBar?.elevation = 0f
+
+        var clicked = false
+
+        binding.fab.setOnClickListener {
+            clicked = !clicked
+            if (clicked){
+                detailViewModel.favUser(id, nickname, avatarUrl)
+                binding.fab.setImageResource(R.drawable.ic_baseline_favorite_24)
+                Toast.makeText(this, "fav", Toast.LENGTH_SHORT).show()
+            } else {
+                detailViewModel.unfavUser(id)
+                binding.fab.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                Toast.makeText(this, "unfav", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
