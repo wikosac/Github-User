@@ -117,4 +117,5 @@ class DetailViewModel(application: Application): AndroidViewModel(application) {
             favoriteDao?.delete(id)
         }
     }
+    fun checkUser(username: String) = favoriteDao?.getFavoriteUserByUsername(username)
 }

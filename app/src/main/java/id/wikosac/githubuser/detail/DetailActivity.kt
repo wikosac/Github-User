@@ -2,6 +2,7 @@ package id.wikosac.githubuser.detail
 
 import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -12,6 +13,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import id.wikosac.githubuser.R
 import id.wikosac.githubuser.databinding.ActivityDetailBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailActivity : AppCompatActivity() {
 
@@ -47,7 +52,7 @@ class DetailActivity : AppCompatActivity() {
             with (binding) {
                 Glide.with(avatarView).load(it.avatarUrl)
                     .error(R.drawable.ic_baseline_broken_image_24).into(avatarView)
-                name.text = it.name
+                name.text = if (it.name != null) it.name else "-"
                 usernameView.text = it.login
                 bio.text = if (it.bio != null) it.bio else "-"
                 val foll = String.format(resources.getString(R.string.follower, it.followers.toString()))
@@ -60,6 +65,7 @@ class DetailActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+        //follower following
         val sectionsPagerAdapter = FollowAdapter(this)
         val viewPager: ViewPager2 = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
@@ -69,7 +75,23 @@ class DetailActivity : AppCompatActivity() {
         }.attach()
         supportActionBar?.elevation = 0f
 
+        //fab
+//        if (checkUser == null) binding.fab.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+//        else binding.fab.setImageResource(R.drawable.ic_baseline_favorite_24)
+
         var clicked = false
+        CoroutineScope(Dispatchers.IO).launch {
+            val checkUser = detailViewModel.checkUser(nickname)
+            Log.d(TAG, "onCreate: $checkUser")
+            withContext(Dispatchers.Main){
+                if (checkUser != null){
+                    clicked = checkUser > 0
+                    binding.fab.setImageResource(
+                        if (clicked) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24
+                    )
+                }
+            }
+        }
 
         binding.fab.setOnClickListener {
             clicked = !clicked
