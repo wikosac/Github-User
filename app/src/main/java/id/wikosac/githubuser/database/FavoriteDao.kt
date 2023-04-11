@@ -2,6 +2,7 @@ package id.wikosac.githubuser.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import id.wikosac.githubuser.main.ItemsItem
 
 @Dao
 interface FavoriteDao {
@@ -15,8 +16,8 @@ interface FavoriteDao {
     fun delete(id: Int)
 
     @Query("SELECT * from Favorite ORDER BY id ASC")
-    fun getAllNotes(): LiveData<List<Favorite>>
+    fun getAllFavorite(): LiveData<List<Favorite>>
 
-    @Query("SELECT count(*) FROM Favorite WHERE username = :username")
-    fun getFavoriteUserByUsername(username: String): Int
+    @Query("SELECT count(*) FROM Favorite WHERE login = :login")
+    fun getFavoriteUserByUsername(login: String): Int
 }

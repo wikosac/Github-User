@@ -21,7 +21,7 @@ class MainViewModel: ViewModel() {
     }
 
     init {
-        findUser("Wikosac")
+        findUser("Wiko")
     }
 
     fun findUser(key: String) {

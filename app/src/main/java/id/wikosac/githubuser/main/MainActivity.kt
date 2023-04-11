@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showSelected(id: Int, nickname: String, avatarUrl: String) {
+    private fun showSelected(id: Int?, nickname: String, avatarUrl: String) {
         val moveWithObjectIntent = Intent(this@MainActivity, DetailActivity::class.java)
         moveWithObjectIntent.putExtra(DetailActivity.EXTRA_ID, id)
         moveWithObjectIntent.putExtra(DetailActivity.EXTRA_ITEM, nickname)
