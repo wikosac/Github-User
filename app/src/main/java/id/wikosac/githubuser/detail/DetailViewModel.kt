@@ -20,13 +20,6 @@ import retrofit2.Response
 
 class DetailViewModel(application: Application): AndroidViewModel(application) {
 
-    private var favoriteDatabase: FavoriteDatabase
-    private var favoriteDao: FavoriteDao?
-
-    init{
-        favoriteDatabase = FavoriteDatabase.getDatabase(application)
-        favoriteDao = favoriteDatabase.favoriteDao()
-    }
     private val _users = MutableLiveData<DetailResponse>()
     private val _listFollowers = MutableLiveData<List<ItemsItem>>()
     private val _listFollowing = MutableLiveData<List<ItemsItem>>()
@@ -35,6 +28,13 @@ class DetailViewModel(application: Application): AndroidViewModel(application) {
     val listFollowers: LiveData<List<ItemsItem>> = _listFollowers
     val listFollowing: LiveData<List<ItemsItem>> = _listFollowing
     val isLoading: LiveData<Boolean> = _isLoading
+    private var favoriteDatabase: FavoriteDatabase
+    private var favoriteDao: FavoriteDao?
+
+    init{
+        favoriteDatabase = FavoriteDatabase.getDatabase(application)
+        favoriteDao = favoriteDatabase.favoriteDao()
+    }
 
     companion object{
         private const val TAG = "DetailViewModel"
@@ -112,10 +112,12 @@ class DetailViewModel(application: Application): AndroidViewModel(application) {
             favoriteDao?.insert(user)
         }
     }
-    fun unfavUser( id: Int){
+
+    fun unFavUser( id: Int){
         CoroutineScope(Dispatchers.IO).launch {
             favoriteDao?.delete(id)
         }
     }
+
     fun checkUser(username: String) = favoriteDao?.getFavoriteUserByUsername(username)
 }

@@ -8,6 +8,7 @@ data class GithubResponse(
 
 	@field:SerializedName("items")
 	val items: List<ItemsItem>
+
 )
 
 @Parcelize

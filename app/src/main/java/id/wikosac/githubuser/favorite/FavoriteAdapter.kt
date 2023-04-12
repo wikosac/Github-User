@@ -10,11 +10,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import id.wikosac.githubuser.R
 import id.wikosac.githubuser.database.Favorite
-import id.wikosac.githubuser.main.ItemsItem
 
 class FavoriteAdapter(
     private val listFav: List<Favorite>
 ) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Favorite)
+    }
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val username: TextView = view.findViewById(R.id.username)
@@ -33,6 +42,9 @@ class FavoriteAdapter(
             .error(R.drawable.ic_baseline_broken_image_24)
             .into(holder.avatar)
         holder.username.text = username
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(listFav[holder.adapterPosition])
+        }
     }
 
     override fun getItemCount() = listFav.size

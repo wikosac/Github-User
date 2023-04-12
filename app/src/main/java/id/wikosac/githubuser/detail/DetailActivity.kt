@@ -2,7 +2,6 @@ package id.wikosac.githubuser.detail
 
 import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -75,14 +74,9 @@ class DetailActivity : AppCompatActivity() {
         }.attach()
         supportActionBar?.elevation = 0f
 
-        //fab
-//        if (checkUser == null) binding.fab.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-//        else binding.fab.setImageResource(R.drawable.ic_baseline_favorite_24)
-
         var clicked = false
         CoroutineScope(Dispatchers.IO).launch {
             val checkUser = detailViewModel.checkUser(nickname)
-            Log.d(TAG, "onCreate: $checkUser")
             withContext(Dispatchers.Main){
                 if (checkUser != null){
                     clicked = checkUser > 0
@@ -98,11 +92,11 @@ class DetailActivity : AppCompatActivity() {
             if (clicked){
                 detailViewModel.favUser(id, nickname, avatarUrl)
                 binding.fab.setImageResource(R.drawable.ic_baseline_favorite_24)
-                Toast.makeText(this, "fav", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Disimpan ke favorit", Toast.LENGTH_SHORT).show()
             } else {
-                detailViewModel.unfavUser(id)
+                detailViewModel.unFavUser(id)
                 binding.fab.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                Toast.makeText(this, "unfav", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Daftar favorit diperbarui", Toast.LENGTH_SHORT).show()
             }
         }
     }

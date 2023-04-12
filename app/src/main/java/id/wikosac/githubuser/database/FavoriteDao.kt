@@ -2,7 +2,6 @@ package id.wikosac.githubuser.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import id.wikosac.githubuser.main.ItemsItem
 
 @Dao
 interface FavoriteDao {
